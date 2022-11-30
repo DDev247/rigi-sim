@@ -1,0 +1,11 @@
+INFO >> RIGISIM Version 0.0.1
+INFO >> Built on Nov 29 2022
+INFO >> Made by DDev aka DDev247
+
+LOG >> Hello Developer!
+
+
+LOG >> This is RIGISIM v0.0.1 built on Nov 29 2022 made by DDev
+
+LOG >> Initiating RIGISIM...
+

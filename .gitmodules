@@ -1,3 +1,6 @@
 [submodule "dependencies/submodules/delta-studio"]
 	path = dependencies/submodules/delta-studio
 	url = https://github.com/ange-yaghi/delta-studio
+[submodule "dependencies/submodules/scs"]
+	path = dependencies/submodules/scs
+	url = https://github.com/ange-yaghi/simple-2d-constraint-solver.git

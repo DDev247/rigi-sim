@@ -1,12 +1,12 @@
-#ifndef DELTA_TEMPLATE_TEMPLATE_APPLICATION_H
-#define DELTA_TEMPLATE_TEMPLATE_APPLICATION_H
+#ifndef DDEV_RIGISIM_RIGISIM_APPLICATION_H
+#define DDEV_RIGISIM_RIGISIM_APPLICATION_H
 
 #include "delta.h"
 
-class TemplateApplication {
+class RigiSimApplication {
 public:
-    TemplateApplication();
-    ~TemplateApplication();
+    RigiSimApplication();
+    ~RigiSimApplication();
 
     void Initialize(void *instance, ysContextObject::DeviceAPI api);
     void Run();
@@ -27,4 +27,4 @@ protected:
     float m_temperature;
 };
 
-#endif /* DELTA_TEMPLATE_TEMPLATE_APPLICATION_H */
+#endif /* DDEV_RIGISIM_RIGISIM_APPLICATION_H */

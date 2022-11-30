@@ -1,16 +1,16 @@
-#include "../include/template_application.h"
+#include "../include/rigisim_application.h"
 
-TemplateApplication::TemplateApplication() {
+RigiSimApplication::RigiSimApplication() {
     m_demoTexture = nullptr;
     m_currentRotation = 0.0f;
     m_temperature = 0.0f;
 }
 
-TemplateApplication::~TemplateApplication() {
+RigiSimApplication::~RigiSimApplication() {
     /* void */
 }
 
-void TemplateApplication::Initialize(void *instance, ysContextObject::DeviceAPI api) {
+void RigiSimApplication::Initialize(void *instance, ysContextObject::DeviceAPI api) {
     dbasic::Path modulePath = dbasic::GetModulePath();
     dbasic::Path confPath = modulePath.Append("delta.conf");
 
@@ -33,10 +33,10 @@ void TemplateApplication::Initialize(void *instance, ysContextObject::DeviceAPI 
 
     dbasic::DeltaEngine::GameEngineSettings settings;
     settings.API = api;
-    settings.DepthBuffer = true;
+    settings.DepthBuffer = false;
     settings.Instance = instance;
     settings.ShaderDirectory = shaderPath.c_str();
-    settings.WindowTitle = "Delta Template Application";
+    settings.WindowTitle = "RIGISIM";
     settings.WindowPositionX = 0;
     settings.WindowPositionY = 0;
     settings.WindowStyle = ysWindow::WindowStyle::Windowed;
@@ -58,26 +58,14 @@ void TemplateApplication::Initialize(void *instance, ysContextObject::DeviceAPI 
     m_assetManager.CompileInterchangeFile((assetPath + "/icosphere").c_str(), 1.0f, true);
     m_assetManager.LoadSceneFile((assetPath + "/icosphere").c_str(), true);
 
-    m_shaders.SetCameraMode(dbasic::DefaultShaders::CameraMode::Target);
+    m_shaders.SetCameraMode(dbasic::DefaultShaders::CameraMode::Flat);
 }
 
-void TemplateApplication::Process() {
-    if (m_engine.IsKeyDown(ysKey::Code::Space)) {
-        m_currentRotation += m_engine.GetFrameLength();
-    }
-
-    if (m_engine.IsKeyDown(ysKey::Code::Up)) {
-        m_temperature += m_engine.GetFrameLength() * 0.5f;
-    }
-    else if (m_engine.IsKeyDown(ysKey::Code::Down)) {
-        m_temperature -= m_engine.GetFrameLength() * 0.5f;
-    }
-
-    if (m_temperature < 0.0f) m_temperature = 0.0f;
-    if (m_temperature > 1.0f) m_temperature = 1.0f;
+void RigiSimApplication::Process() {
+    
 }
 
-void TemplateApplication::Render() {
+void RigiSimApplication::Render() {
     const int screenWidth = m_engine.GetGameWindow()->GetGameWidth();
     const int screenHeight = m_engine.GetGameWindow()->GetGameHeight();
 
@@ -89,7 +77,7 @@ void TemplateApplication::Render() {
 
     m_shaders.ResetLights();
     m_shaders.SetAmbientLight(ysMath::GetVector4(ysColor::srgbiToLinear(0x34, 0x98, 0xdb)));
-
+/*
     dbasic::Light light;
     light.Active = 1;
     light.Attenuation0 = 0.0f;
@@ -118,21 +106,9 @@ void TemplateApplication::Render() {
     glow.Direction = ysVector4(0.0f, 0.0f, 0.0f, 0.0f);
     glow.FalloffEnabled = 1;
     glow.Position = ysVector4(0.0f, 0.0f, 0.0f);
-    m_shaders.AddLight(glow);
+    m_shaders.AddLight(glow);*/
 
-    const ysMatrix rotationTurntable = ysMath::RotationTransform(ysMath::Constants::ZAxis, m_currentRotation); 
-
-    m_shaders.ResetBrdfParameters();
-    m_shaders.SetMetallic(0.8f);
-    m_shaders.SetIncidentSpecular(0.8f);
-    m_shaders.SetSpecularRoughness(0.7f);
-    m_shaders.SetSpecularMix(1.0f);
-    m_shaders.SetDiffuseMix(1.0f);
-    m_shaders.SetEmission(ysMath::Mul(ysColor::srgbiToLinear(0xff, 0x0, 0x0), ysMath::LoadScalar(m_temperature)));
-    m_shaders.SetBaseColor(ysColor::srgbiToLinear(0x34, 0x49, 0x5e));
-    m_shaders.SetColorReplace(true);
-    m_shaders.SetObjectTransform(ysMath::MatMult(ysMath::TranslationTransform(ysMath::LoadVector(0.0f, 0.0f, 0.0f)), rotationTurntable));
-    m_engine.DrawModel(m_shaders.GetRegularFlags(), m_assetManager.GetModelAsset("Icosphere"));
+    const ysMatrix rotationTurntable = ysMath::RotationTransform(ysMath::Constants::ZAxis, 0);
 
     m_shaders.ResetBrdfParameters();
     m_shaders.SetMetallic(0.0f);
@@ -142,14 +118,17 @@ void TemplateApplication::Render() {
     m_shaders.SetDiffuseMix(1.0f);
     m_shaders.SetColorReplace(true);
     m_shaders.SetBaseColor(ysColor::srgbiToLinear(0xbd, 0xc3, 0xc7));
-    m_shaders.SetObjectTransform(ysMath::MatMult(ysMath::TranslationTransform(ysMath::LoadVector(0.0f, 0.0f, 0.0f)), rotationTurntable));
     m_shaders.SetObjectTransform(ysMath::MatMult(ysMath::TranslationTransform(ysMath::LoadVector(0.0f, 0.0f, -1.0f)), rotationTurntable));
     m_engine.DrawModel(m_shaders.GetRegularFlags(), m_assetManager.GetModelAsset("Floor"));
 }
 
-void TemplateApplication::Run() {
+void RigiSimApplication::Run() {
     while (m_engine.IsOpen()) {
         m_engine.StartFrame();
+
+        if (m_engine.ProcessKeyDown(ysKey::Code::Escape)) {
+            break;
+        }
 
         Process();
         Render();
@@ -158,7 +137,7 @@ void TemplateApplication::Run() {
     }
 }
 
-void TemplateApplication::Destroy() {
+void RigiSimApplication::Destroy() {
     m_shaderSet.Destroy();
 
     m_assetManager.Destroy();

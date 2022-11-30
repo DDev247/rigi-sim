@@ -1,0 +1,60 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"label": "CMake: build (Debug)",
+			"command": "cmake",
+			"group":{
+				"kind": "build",
+				"isDefault": true
+			},
+			"args": [
+				"--build",
+				".\\build",
+				"--config RelWithDebInfo",
+				"--parallel 4"
+			]
+		},
+		{
+			"type": "shell",
+			"label": "CMake: build (Release)",
+			"command": "cmake",
+			"group":{
+				"kind": "build",
+				"isDefault": true
+			},
+			"args": [
+				"--build",
+				".\\build",
+				"--config Release",
+				"--parallel 4"
+			]
+		},
+		{
+			"type": "shell",
+			"label": "CMake: setup",
+			"command": "cmake",
+			"group":{
+				"kind": "none",
+				"isDefault": true
+			},
+			"args": [
+				".",
+				"-B .\\build"
+			]
+		},
+		{
+			"type": "shell",
+			"label": "Folders: setup",
+			"command": "mkdir",
+			"group":{
+				"kind": "none",
+				"isDefault": true
+			},
+			"args": [
+				"build"
+			]
+		}
+	]
+}

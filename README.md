@@ -1,32 +1,51 @@
-# Delta Template Project
+# RIGISIM
+### A Rigidbody simulator to create everything you can think of.
 
-This is a basic template project used to create an application that uses the [Delta Studio](https://github.com/ange-yaghi/delta-studio) game engine.
+##### *insert screenshot*
 
-## Steps to Clone and Build
+---
 
-**Note: this project currently only builds on Windows!**
+## What is this?
+This is a rigidbody simulator using AngeTheGreat's physics engine. You can create bascially everything with this.
 
-### Step 1 - Clone the repository
-```git clone --recurse-submodules https://github.com/ange-yaghi/delta-template```
+## How to install it?
+### Method 1. Download ready-to-use build
+- Step 1. Go to the Releases page
+- Step 2. Download the latest release
+- Step 3. Unpack the `.zip` file.
+- Step 4. Run the simulator: `bin/rigisim.exe`.
 
-### Step 2 - Install CMake
-Install the latest version of CMake [here](https://cmake.org/) if it's not already installed.
+### Method 2. (IGNORE IF YOU ARE NOT A DEVELOPER!) Build it yourself
+- Step 1. Install necessary dependencies  
+This project uses the CMake project system. To build the project you will need it installed. The other dependencies are:
+```
+SDL2
+SDL2_image
+Boost (make sure to build the optional dependencies)
+```
 
-### Step 3 - Install Dependencies
-You will need to install the following dependencies and CMake will need to be able to locate them (ie. they need to be listed on your PATH):
+- Step 2. Clone  
+Use this command to clone the project:
+```
+git clone --recurse-submodules https://github.com/DDev247/rigi-sim.git
+```
 
-    1. SDL2
-    2. SDL2_image
-    3. Boost (make sure to build the optional dependencies)
-
-### Step 4 - Build and Run
-From the root directory of the project, run the following commands:
-
+- Step 3. Configure project  
+You can use the Visual Studio Code presets or do it manually:
 ```
 mkdir build
 cd build
 cmake ..
-cmake --build .
 ```
 
-If these steps are successful, a Visual Studio solution will be generated in ```build/Debug```. You can open this project with Visual Studio and then run the ```delta-template``` project. If you encounter an error telling you that you're missing DLLs, you will have to copy those DLLs to your EXE's directory.
+- Step 4.1. Compile (Debug)  
+Use the Visual Studio Code presets for debug or use this command:
+```
+cmake --build . --config RelWithDebInfo --parallel 2
+```
+
+- Step 4.2. Compile (Release)
+Use the Visual Studio Code presets for release or use this command:
+```
+cmake --build . --config Release --parallel 2
+```
